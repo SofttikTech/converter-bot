@@ -1,3 +1,5 @@
+const ethers = require('ethers');
+
 const Factory = artifacts.require('./Factory.sol');
 const Router = artifacts.require('./Router.sol');
 const Pair = artifacts.require('./Pair.sol');
@@ -8,6 +10,7 @@ const TheEllipsisExchange = artifacts.require('./TheEllipsisExchange.sol');
 
 module.exports = async function done(deployer, network, accounts) {
   try {
+
     console.log(`*********************1`)
     /* The Ellipsis Exchange */
     const _decimals = 18;
@@ -61,18 +64,88 @@ module.exports = async function done(deployer, network, accounts) {
     console.log(`***** balanceOf = `, web3.utils.BN(balanceOf).toString());
 
 
-    // /* BEP20Token */
-    // const _decimals = 18;
-    // const _name = 'BEP20Token';
-    // const _symbol = 'BEP20';
-    // const _admin = (await web3.eth.getAccounts())[0];                                                     // TODO: Replace me
 
-    // await deployer.deploy(BEP20Token, _name, _symbol, _decimals);
-    // // await deployer.deploy(BEP20Token);
 
-    // const deployedToken = await BEP20Token.deployed();
+    /***************************** **         Swap Tokens with BNB                  *********************************** */
+    // const addresses = {
+    //   WBNB: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+    //   factory: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
+    //   router: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    //   recipient: _admin
+    // }
 
-    // console.log('***************************BEP20Token Address = ', deployedToken.address);
+    // const wbnb = new ethers.Contract(
+    //   addresses.WBNB,
+    //   [
+    //     'function approve(address spender, uint amount) public returns(bool)',
+    //   ],
+    //   account
+    // );
+
+
+
+    // const init = async () => {
+    //   const tx = await wbnb.approve(
+    //     router.address,
+    //     'replace by amount covering several trades'
+    //   );
+    //   const receipt = await tx.wait();
+    //   console.log('Transaction receipt');
+    //   console.log(receipt);
+    // }
+
+    // factory.on('PairCreated', async (token0, token1, pairAddress) => {
+    //   console.log(`
+    //     New pair detected
+    //     =================
+    //     token0: ${token0}
+    //     token1: ${token1}
+    //     pairAddress: ${pairAddress}
+    //   `);
+
+    //   //The quote currency needs to be WBNB (we will pay with WBNB)
+    //   let tokenIn, tokenOut;
+    //   if (token0 === addresses.WBNB) {
+    //     tokenIn = token0;
+    //     tokenOut = token1;
+    //   }
+
+    //   if (token1 == addresses.WBNB) {
+    //     tokenIn = token1;
+    //     tokenOut = token0;
+    //   }
+
+    //   //The quote currency is not WBNB
+    //   if (typeof tokenIn === 'undefined') {
+    //     return;
+    //   }
+
+    //   //We buy for 0.1 BNB of the new token
+    //   //ethers was originally created for Ethereum, both also work for BSC
+    //   //'ether' === 'bnb' on BSC
+    //   const amountIn = ethers.utils.parseUnits('0.1', 'ether');
+    //   const amounts = await router.getAmountsOut(amountIn, [tokenIn, tokenOut]);
+    //   //Our execution price will be a bit different, we need some flexbility
+    //   const amountOutMin = amounts[1].sub(amounts[1].div(10));
+    //   console.log(`
+    //     Buying new token
+    //     =================
+    //     tokenIn: ${amountIn.toString()} ${tokenIn} (WBNB)
+    //     tokenOut: ${amounOutMin.toString()} ${tokenOut}
+    //   `);
+    //   const tx = await router.swapExactTokensForTokens(
+    //     amountIn,
+    //     amountOutMin,
+    //     [tokenIn, tokenOut],
+    //     addresses.recipient,
+    //     Date.now() + 1000 * 60 * 10 //10 minutes
+    //   );
+    //   const receipt = await tx.wait();
+    //   console.log('Transaction receipt');
+    //   console.log(receipt);
+    // });
+
+    // init();
 
   } catch (error) {
     console.log(`***************error`, error)
