@@ -6,24 +6,24 @@ const Pair = artifacts.require('./Pair.sol');
 const Token1 = artifacts.require('./Token1.sol');
 // const Token2 = artifacts.require('./Token2.sol');
 
-const TheEllipsisExchange = artifacts.require('./TheEllipsisExchange.sol');
+const SOAR = artifacts.require('./SOAR.sol');
 
 module.exports = async function done(deployer, network, accounts) {
   try {
 
     console.log(`*********************1`)
-    /* The Ellipsis Exchange */
+    /* SOAR */
     const _decimals = 18;
     const _name = 'SOAR';
     const _symbol = 'SR';
     let _admin = (await web3.eth.getAccounts())[0];                                                     // TODO: Replace me
 
-    await deployer.deploy(TheEllipsisExchange);
-    // await deployer.deploy(TheEllipsisExchange);
+    await deployer.deploy(SOAR);
+    // await deployer.deploy(SOAR);
 
-    const token2 = await TheEllipsisExchange.deployed();
+    const token2 = await SOAR.deployed();
 
-    console.log('***************************The Ellipsis Exchange Address = ', token2.address);
+    console.log('***************************SOAR ContractAddress = ', token2.address);
 
     const [admin, _] = await web3.eth.getAccounts();
     const factory = await Factory.at('0x6725F303b657a9451d8BA641348b6761A6CC7a17');

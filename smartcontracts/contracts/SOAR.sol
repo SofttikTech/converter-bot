@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 import "./math/SafeMath.sol";
 
-contract TheEllipsisExchange {
+contract SOAR {
     constructor() public {
         initialize();
         pause();
@@ -317,11 +317,11 @@ contract TheEllipsisExchange {
     }
 
     /**
-     * @dev Reclaim all TEX at the contract address.
-     * This sends the TEX tokens that this contract add holding to the owner.
+     * @dev Reclaim all Soar at the contract address.
+     * This sends the Soar tokens that this contract add holding to the owner.
      * Note: this is not affected by freeze constraints.
      */
-    function reclaimTEX() external onlyOwner {
+    function reclaimSOAR() external onlyOwner {
         uint256 _balance = balances[address(this)];
         balances[address(this)] = 0;
         balances[owner] = balances[owner].add(_balance);
