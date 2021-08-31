@@ -28,7 +28,9 @@ module.exports = {
         testnet: {
             provider: function () {
                 return new HDWalletProvider(process.env.MNEMONIC,
-                    `https://data-seed-prebsc-1-s1.binance.org:8545/`, 0, 9);
+                    // `https://data-seed-prebsc-1-s1.binance.org:8545/`, 0, 9);
+                    `https://data-seed-prebsc-1-s2.binance.org:8545/
+                    `, 0, 9);
             },
             network_id: 97,
             gas: 5000000,
