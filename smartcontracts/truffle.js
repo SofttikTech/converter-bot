@@ -31,7 +31,7 @@ module.exports = {
                     `https://data-seed-prebsc-1-s1.binance.org:8545/`, 0, 9);
             },
             network_id: 97,
-            gas: 10000000,
+            gas: 5000000,
             gasPrice: 10000000000, // 10 Gwei
         },
         bsc: {
