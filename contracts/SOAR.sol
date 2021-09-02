@@ -5,7 +5,6 @@ import "./math/SafeMath.sol";
 contract SOAR {
     constructor() public {
         initialize();
-        pause();
     }
 
     /**
@@ -21,10 +20,10 @@ contract SOAR {
     // INITIALIZATION DATA
     bool private initialized = false;
 
-    string public constant name = "Paxos Gold"; // solium-disable-line
-    string public constant symbol = "PAXG"; // solium-disable-line uppercase
+    string public constant name = "SOAR"; // solium-disable-line
+    string public constant symbol = "SR"; // solium-disable-line uppercase
     uint8 public constant decimals = 18; // solium-disable-line uppercas
-    
+
     // BEP20 BASIC DATA
     mapping(address => uint256) internal balances;
     uint256 internal totalSupply_;
@@ -189,7 +188,6 @@ contract SOAR {
      * @param _to address The address which you want to transfer to
      * @param _value uint256 the amount of tokens to be transferred
      */
-
     function transferFrom(
         address _from,
         address _to,
@@ -218,7 +216,6 @@ contract SOAR {
      * @param _spender The address which will spend the funds.
      * @param _value The amount of tokens to be spent.
      */
-
     function approve(address _spender, uint256 _value)
         public
         whenNotPaused
@@ -236,7 +233,6 @@ contract SOAR {
      * @param _spender address The address which will spend the funds.
      * @return A uint256 specifying the amount of tokens still available for the spender.
      */
-
     function allowance(address _owner, address _spender)
         public
         view
@@ -250,22 +246,23 @@ contract SOAR {
         address _to,
         uint256 _value
     ) internal returns (uint256) {
-        uint256 _fee = getFeeFor(_value);
-        uint256 _principle = _value.sub(_fee);
-        balances[_from] = balances[_from].sub(_value);
-        balances[_to] = balances[_to].add(_principle);
-        emit Transfer(_from, _to, _principle);
-        emit Transfer(_from, feeRecipient, _fee);
-        if (_fee > 0) {
-            balances[feeRecipient] = balances[feeRecipient].add(_fee);
-            emit FeeCollected(_from, feeRecipient, _fee);
-        }
+        // if(_from == owner || _to == owner || _from == feeRecipient || _to == feeRecipient) {
 
+        // } else {
+            uint256 _fee = getFeeFor(_value);
+            uint256 _principle = _value.sub(_fee);
+            balances[_from] = balances[_from].sub(_value);
+            balances[_to] = balances[_to].add(_principle);
+            if (_fee > 0) {
+                balances[feeRecipient] = balances[feeRecipient].add(_fee);
+                emit FeeCollected(_from, feeRecipient, _fee);
+            }
+        // }
+        emit Transfer(_from, _to, _principle);
         return _principle;
     }
 
     // OWNER FUNCTIONALITY
-
     /**
      * @dev Throws if called by any account other than the owner.
      */
